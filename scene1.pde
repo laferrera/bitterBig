@@ -24,10 +24,7 @@ void loadScene1(){
   env3ADSR = new Envelope(0.01, .01, 0.75, .2);
 }
 
-void renderScene1(){
-  camera(width/2.0, height/2.0, (height/2.0) / tan(PI*30.0 / 180.0), width/2.0, height/2.0, 0, 0, 1, 0);  
-
-  
+void renderScene1(){  
   //glitchAmp = (lfo3Val+1 )/2 + (kick/4) + (snare/2);
   //glitchAmp = (lfo3Val+1 )/2 * ((kick/4) + (snare/2));
   glitchAmp = (lfo3Val+1 )/2 * (env3/2);

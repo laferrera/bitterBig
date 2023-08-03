@@ -40,6 +40,7 @@ PShader glitch;
 PShader grain;
 PShader waves;
 PShader dupontSaturation;
+PShader physarum;
 
 boolean kickGate = false;
 Envelope kickADSR;
@@ -141,6 +142,7 @@ void setup() {
   grain = loadShader("grain.glsl");
   waves = loadShader("waves.glsl");
   dupontSaturation = loadShader("dupontSaturation.glsl");
+  physarum = loadShader("physarum.glsl");
   
   //oscP5 = new OscP5(this,10201);
   //myRemoteLocation = new NetAddress("127.0.0.1",2727);
@@ -200,6 +202,7 @@ void draw() {
   shaders();
   //scaledPG.loadPixels();
   if(sceneId!=5){
+    camera(width/2.0, height/2.0, (height/2.0) / tan(PI*30.0 / 180.0), width/2.0, height/2.0, 0, 0, 1, 0);
     image(scaledPG,0,0,width,height);
   }
   if(exportingVideo){videoExport.saveFrame();}

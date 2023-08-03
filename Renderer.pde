@@ -6,6 +6,9 @@ void render(){
     case 1: 
       renderScene1();
       break;
+    case 3:
+    renderSceneFungi();
+      break;
     case 4:
     renderSceneWaves();
       break;
