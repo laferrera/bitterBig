@@ -112,7 +112,7 @@ PShape bitterGreensText;
 PShape charliText;
 
 int sceneId = 0;
-boolean delayedInits = false;
+boolean finishedDelayedInits = false;
 
 void setup() {
   size(960, 540, P3D);
@@ -190,18 +190,7 @@ void mousePressed(){
 
   
 
-void draw() {
-  if(!delayedInits){
-    SimplePBR.init(this, "data/textures/cubemap/Zion_Sunsetpeek"); // init PBR setting processed cubemap
-    mat = new PBRMat("data/textures/material/Metal10/");
-    starMat = new PBRMat("data/textures/material/Metal10/");
-    bitterGreensText = loadShape("data/bittergreens2.obj");
-    //bitterGreensText.rotateX(PI);
-    charliText = loadShape("data/bittergreens2.obj");
-    charliText.rotateX(PI);
-    bitterGreensText.scale(0.9);
-  }
-    
+void draw() {    
   resetShader();
   render();
   scaledPG.loadPixels();
@@ -211,4 +200,16 @@ void draw() {
     image(scaledPG,0,0,width,height);
   }
   if(exportingVideo){videoExport.saveFrame();}
+  if(!finishedDelayedInits){
+    delay(400);
+    SimplePBR.init(this, "data/textures/cubemap/Zion_Sunsetpeek"); // init PBR setting processed cubemap
+    mat = new PBRMat("data/textures/material/Metal10/");
+    starMat = new PBRMat("data/textures/material/Metal10/");
+    bitterGreensText = loadShape("data/bittergreens2.obj");
+    //bitterGreensText.rotateX(PI);
+    charliText = loadShape("data/bittergreens2.obj");
+    charliText.rotateX(PI);
+    bitterGreensText.scale(0.9);
+    finishedDelayedInits = true;
+  }
 }
