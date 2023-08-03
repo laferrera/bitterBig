@@ -4,8 +4,14 @@ float txtRandomAmount = 20;
 PVector[] colors = {new PVector(255,50,50), new PVector(0,255,255)};
 PVector[] lightPositions = new PVector[8]; // Processing support 8 lights
 
-void loadScene3dTxt(){
+Star[] stars = new Star[2000];
+float z = 0;
 
+void loadScene3dTxt(){
+    for(int i=0; i<stars.length; i++) {
+     
+      stars[i] = new Star(random(-width, width), random(-width, width), random(-width, width)); 
+    }
     
     SimplePBR.setExposure(0.05f);
     mat.setMetallic(1.5);
@@ -66,10 +72,96 @@ void renderScene3dTxt(){
     //  tes.setVertex(i, v);
     //}
     
-    mat.bind();
+    
     //bitterGreensText.rotateX(.02);
     //shape(bitterGreensText);
     txtShapeXRot += 0.02;
     tes.rotateX(txtShapeXRot);
+    
+    
+    draw3dTxtBackground();
+    mat.bind();
     shape(tes);
+}
+
+void draw3dTxtBackground(){
+    scaledPG.beginDraw();
+      scaledPG.fill(255);
+      scaledPG.stroke(255);
+      scaledPG.background(0);
+      scaledPG.image(dvdImage, dvdX, dvdY, dvdWidth, dvdHeight);
+      scaledPG.tint(dvdR,dvdG,dvdB);
+      
+      scaledPG.background(20); // DARK GREY
+
+ 
+     // CAMERA //
+  float mX = map(mouseX, 0, width, 100, width*2);
+  camera(0, 0, mX, 0, 0, 0, 0, 1, 0);
+ 
+   // SCENE CENTER TEST //
+   /*pushMatrix();
+   translate(0, 0, 0);
+   fill(#FFFFFF);
+   sphere(40);
+   sphereDetail(10);
+   popMatrix();*/
+  
+   
+   // ROTATE //
+   //float Y = map(mouseY, 0, height, -0.5, 0.5);
+   //float X = map(mouseX, 0, width, -0.5, 0.5);
+   //rotateX(Y);
+   rotateY(z);
+   scaledPG.rotateZ(z);
+   z = z + 0.001;
+   
+   // TRANSLATE //
+   //translate(mouseX, mouseY); // HORIZONTAL & VERTICAL
+   //translate(mouseX, 0); // HORIZONTAL ONLY
+     for(int i=0; i<stars.length; i++) {
+      stars[i].fly(0); 
+     }
+      
+      
+    scaledPG.endDraw();
+    image(scaledPG,0,0,width,height);
+}
+
+
+class Star {
+ float x;
+ float y;
+ float z;
+ float s = random(2, 10);
+ 
+ Star(float starX, float starY, float starZ) {
+ x = starX;
+ y = starY;
+ z = starZ; 
+ }
+ 
+ void fly(int speed) {
+   x = x - speed;
+   y = y - speed;
+     
+   pushMatrix();
+   translate(x, y , z);
+   noSmooth();
+   
+   fill(255);
+   
+   noStroke();
+   
+     // BOX //
+   //box(10);
+   box(s);
+   
+     // SPHERE //
+   //sphereDetail(10);
+   //sphere(4);
+   
+   
+   popMatrix();
+ }
 }
