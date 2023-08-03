@@ -52,6 +52,9 @@ float snareVel=0;
 boolean env3Gate = false;
 Envelope env3ADSR;
 float env3;
+boolean env4Gate = false;
+Envelope env4ADSR;
+float env4;
 
 
 boolean cymGate = false;
@@ -170,10 +173,14 @@ void setup() {
   mat = new PBRMat("data/textures/material/Metal10/");
   starMat = new PBRMat("data/textures/material/Metal10/");
   bitterGreensText = loadShape("data/bittergreens2.obj");
-  //bitterGreensText.rotateX(PI);
-  charliText = loadShape("data/bittergreens2.obj");
+  bitterGreensText.rotateX(PI);
+  bitterGreensText.translate(10,0,0);
+  bitterGreensText.scale(0.9);  
+  charliText = loadShape("data/charli2.obj");
+  charliText.translate(-100,0,0);
   charliText.rotateX(PI);
-  bitterGreensText.scale(0.9);
+  charliText.scale(0.9);
+
   setupSceneIdle();  
     
   // Create an Audio input and grab the 1st channel
@@ -208,4 +215,12 @@ void draw() {
     image(scaledPG,0,0,width,height);
   }
   if(exportingVideo){videoExport.saveFrame();}
+}
+
+void dispose(){
+  println("stopping...");
+  myBus.dispose();
+  g.dispose();
+  scaledPG.dispose();
+  println("bye");
 }

@@ -133,7 +133,7 @@ class Envelope{
           out = 0.0;
           mode = 0;
         }
-        break; //<>//
+        break; //<>// //<>//
       default:
         break;
     }

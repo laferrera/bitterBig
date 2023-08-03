@@ -2,11 +2,17 @@ PBRMat mat;
 PBRMat starMat;
 float txtShapeXRot = 0;
 float txtRandomAmount = 20;
-PVector[] colors = {new PVector(255,50,50), new PVector(0,255,255)};
+float txt3dzDir = 1;
+//PVector[] colors1 = {new PVector(255,50,50), new PVector(0,255,255)};
+PVector[] colors1 = {new PVector(64,255,64), new PVector(0,255,255)};
+PVector[] colors2 = {new PVector(255,0,255), new PVector(255,128,0)};
 PVector[] lightPositions = new PVector[8]; // Processing support 8 lights
 
 Star[] stars = new Star[2000];
 float txt3dz = (height/2.0) / tan(PI*30.0 / 180.0);
+int txt3dToDisplay = 0;
+float cubemapPos = width;
+float cubemapDir = 1;
 
 void loadScene3dTxt(){
     for(int i=0; i<stars.length; i++) {
@@ -24,46 +30,69 @@ void loadScene3dTxt(){
       lightPositions[i] = new PVector();
     }
     
-    kickADSR = new Envelope(0.01, .01, 1.0, .125);
-    snareADSR = new Envelope(0.01, .01, 1, 0.0625);
-    env3ADSR = new Envelope(0.01, .01, 0.75, .2);
+    kickADSR = new Envelope(0.03125, .01, 1.0, .0625);
+    //snareADSR = new Envelope(0.01, .01, 1, 0.125);
+    //snareADSR = new Envelope(0.01, .01, 1, 0.25);
+    snareADSR = new Envelope(0.01, .25, 0.75, 0.25);
+    env3ADSR = new Envelope(0.0, .00, 1, 0);
+    env4ADSR = new Envelope(0.01, .01, 1, 0.25);    
     lfo1.SetAmp(.2);
     lfo1.SetFreq(.12);
-    //lfo1.SetFreq(.006);
-    //lfo1.SetFreq(0.003);
-    lfo2.SetAmp(0.25);
-    lfo2.SetFreq(0.045);
+    lfo2.SetAmp(0.2);
+    lfo2.SetFreq(0.125);
+    lfo3.SetAmp(0.2);
+    lfo3.SetFreq(0.083333333);
 }
 
 void renderScene3dTxt(){
+    
 
+    kick = kickADSR.Process(kickGate);
+    snare = (snareADSR.Process(snareGate));
+    env3 = env3ADSR.Process(env3Gate);
+    txt3dToDisplay = env3 < 1 ? 0 : 1; 
+    lfo1Val = lfo1.Process();
+    lfo2Val = lfo2.Process();
+    lfo3Val = lfo3.Process();
+    
+    float bgColor = map(snare,0,1,0,64);
     background(0);
+    //background(bgColor);
     //translate(width/2, height/2,0);
     resetShader();
     fill(255);
     noLights();
 
-    kick = kickADSR.Process(kickGate);
-    snare = (snareADSR.Process(snareGate));
-    env3 = (env3ADSR.Process(env3Gate) + 1.f );
-    lfo1Val = lfo1.Process();
-    lfo2Val = lfo2.Process();
-
-    float bright = lfo1Val + 0.5 + 2*snare;
+    float bright = lfo1Val + 0.8 + 2*snare;
+  
+    if((cubemapPos > width && cubemapDir == 1) || (cubemapPos < -width && cubemapDir == -1)){
+      cubemapDir = -cubemapDir; 
+    }
+    
+    cubemapPos += (lfo3Val+1) * cubemapDir*5;
+     
   
     SimplePBR.drawCubemap(this.g, 800);
-    //rotates 
-    //rotateY(txt3dz);
-    //txt3dz = txt3dz + 0.2;
-    //float txt3dmX = map(mouseX, 0, width, 100, width*2); 
-    //txt3dz += 0.2;
-    txt3dz += 8*kick;
-    camera(0, 0, txt3dz, 0, 0, 0, 0, 1, 0);
-    starMat.setMetallic(14.5);    
-    starMat.bind();
+    txt3dz += abs(12*kick*(2+lfo1Val)) * txt3dzDir;
+    if(txt3dz > width || txt3dz < -width/8.f){
+      txt3dzDir = -txt3dzDir;
+    }    
+    if(txt3dzDir > width){txt3dzDir = width-10;}
+    if(txt3dzDir < -width/8){txt3dzDir = -width/8-10;}
+    //camera(0, 0, txt3dz, 0, 0, 0, 0, 1, 0);
+    float cameraX = lfo2Val * 500;
+    float cameraY = lfo3Val * 500;
+    camera(cameraX, cameraY, txt3dz, 0, 0, 0, 0, 1, 0);    
 
      for(int i=0; i<stars.length; i++) {
-      stars[i].fly(0); 
+      float speed = 10*lfo1Val;
+      if(i%3 == 1){
+        speed = 10*lfo2Val;
+      }
+      if(i%3 == 2){
+        speed = 10*lfo3Val;
+      }
+      stars[i].fly(speed); 
      }
   
 
@@ -93,8 +122,11 @@ void renderScene3dTxt(){
     }
     
     for(int i=0;i <8;i++) {
-      PVector lightColor = colors[i%2];
-      //pointLight(lightColor.x,lightColor.y, lightColor.z, lightPositions[i].x, lightPositions[i].y, lightPositions[i].z);
+      //PVector lightColor = colors1[i%2];
+      PVector lightColor = colors1[0];
+      if(env4Gate){
+         lightColor = colors2[0];
+      }
       pointLight(lightColor.x * bright,lightColor.y * bright, lightColor.z * bright, lightPositions[i].x, lightPositions[i].y, lightPositions[i].z);
     }
     
@@ -116,13 +148,21 @@ void renderScene3dTxt(){
     
     //bitterGreensText.rotateX(.02);
     //shape(bitterGreensText);
-    txtShapeXRot += 0.02;
+    txtShapeXRot = 0.02;
+    //txtShapeXRot = map(lfo1Val,-.2,.2,0.1,0.3);
+    txtShapeXRot = (abs(lfo1Val) / 10.f)+0.01;
     tes.rotateX(txtShapeXRot);
-    
+    bitterGreensText.rotateX(txtShapeXRot);
+    charliText.rotateX(txtShapeXRot);
     
     
     //mat.bind();
-    shape(tes);
+    if(env3Gate){
+      shape(charliText);
+    } else {
+      //shape(tes);
+      shape(bitterGreensText);
+    }
 }
 
 
@@ -139,7 +179,7 @@ class Star {
  z = starZ; 
  }
  
- void fly(int speed) {
+ void fly(float speed) {
    x = x - speed;
    y = y - speed;
      
@@ -152,7 +192,9 @@ class Star {
    noStroke();
    
      // BOX //
-   box(5);
+   starMat.setMetallic(14.5);    
+   starMat.bind();     
+   box(2);
    box(s);
 
      
