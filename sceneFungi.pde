@@ -2,10 +2,10 @@ final int PARTICLE_NUM = 100000;
 color[] prevPixels;
 
 Particle p[];
-float sensorAngle = 0.3; // 0.3
-float sensorDist = 5; // 5
+float sensorAngle = 0.3; // 0.3, 0 makes it grow a lot, 0.1
+float sensorDist = 5; // 5, 0 makes it grow a lot, 0.1
 float moveSpeed = 3.1; // 3.1
-float decay = 0.1;
+float decay = 0.08; // 0.1
 
 
 void loadSceneFungi(){
@@ -14,34 +14,52 @@ void loadSceneFungi(){
   for(int i = 0; i< PARTICLE_NUM; i++){
     p[i]= new Particle(new PVector(random(1)*scaledPG.width, random(1)*scaledPG.height), random(1)*PI*2);
   }
+  //greyScale = false;
+  //starStreakOn = false;
+  //channelsOn = false;
+  //gaussianOn = false;
+  //blurOn = false;
+  //glitchOn = false;
+  //grainOn = false;
+  
   greyScale = false;
-  starStreakOn = false;
+  starStreakOn = true;
   channelsOn = false;
   gaussianOn = false;
   blurOn = false;
   glitchOn = false;
-  grainOn = false;
   
   kickADSR = new Envelope(0.1, .01, 1., .2);
   snareADSR = new Envelope(0.1, .01, 1, .2);
-  env3ADSR = new Envelope(0.01, .01, 0.75, .2);
-  //lfo1.SetAmp(1.0);
-  lfo1.SetAmp(.2);
-  lfo1.SetFreq(.12);
-  //lfo1.SetFreq(.006);
-  //lfo1.SetFreq(0.003);
-  lfo2.SetAmp(0.25);
-  lfo2.SetFreq(0.045);
+  env3ADSR = new Envelope(0.25, .01, 1, .25);
+  env4ADSR = new Envelope(0.25, .01, 1, .25);
+  lfo1.SetAmp(1.0);
+  lfo1.SetFreq(0.320825);
+  lfo2.SetAmp(1);
+  lfo2.SetFreq(0.08020625045);
+  lfo3.SetAmp(1);
+  lfo3.SetFreq(0.1604125);
 }
 
 void renderSceneFungi(){
 
-  //scaledPG.beginDraw();
-  //// weird bug,.. https://github.com/processing/processing/issues/6217
-  //scaledPG.endDraw();
+  kick = kickADSR.Process(kickGate);
+  snare = (snareADSR.Process(snareGate));
+  env3 = env3ADSR.Process(env3Gate);
+  env4 = env4ADSR.Process(env4Gate);
+  txt3dToDisplay = env3 < 1 ? 0 : 1; 
+  lfo1Val = lfo1.Process();
+  lfo2Val = lfo2.Process();
+  lfo3Val = lfo3.Process();
     
   channelsOn = kickGate;
   starStreakOn = snareGate;
+  
+  sensorDist = map(lfo1Val,-1,1,5,0);
+  sensorAngle = map(lfo2Val,-1,1,0,0.3);
+  decay = map(env4,0,1,.1,0.06); 
+  //decay = map(env4,0,1,.06,0.03); // better for blurOn
+   
     
   scaledPG.beginDraw();
     physarum.set("_Tex", scaledPG.get());

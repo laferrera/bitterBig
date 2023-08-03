@@ -44,18 +44,18 @@ PShader physarum;
 
 boolean kickGate = false;
 Envelope kickADSR;
-float kick;
+float kick =0;
 float kickVel=0;
 boolean snareGate = false;
 Envelope snareADSR;
-float snare;
+float snare = 0;
 float snareVel=0;
 boolean env3Gate = false;
 Envelope env3ADSR;
-float env3;
+float env3 =0;
 boolean env4Gate = false;
 Envelope env4ADSR;
-float env4;
+float env4 = 0;
 
 
 boolean cymGate = false;
@@ -153,6 +153,7 @@ void setup() {
   kickADSR = new Envelope(0.01, .01, 0.75, .2);
   snareADSR = new Envelope(0.01, .25, 0.75, .25);
   env3ADSR = new Envelope(0.01, .01, 0.75, .2);
+  env4ADSR = new Envelope(0.01, .01, 0.75, .2);
   
   
   tomADSR = new Envelope(0.01, .25, 0.75, .1);

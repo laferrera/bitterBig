@@ -5,7 +5,7 @@ void myKeyPressed(KeyEvent ke){
     case 'g': saveFrame(); break;
     case 'p': printInfo(); break;
     case 'q': { videoExport.endMovie(); exit();}
-    case '0': { sceneId = 0;} break;
+    case '0': { sceneId = 0;setupSceneIdle();} break;
     case '1': { sceneId = 1;loadScene1();} break;
     case '2': { sceneId = 2;} break;
     case '3': { sceneId = 3;loadSceneFungi();} break;
