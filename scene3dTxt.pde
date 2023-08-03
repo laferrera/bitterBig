@@ -1,4 +1,5 @@
 PBRMat mat;
+PBRMat starMat;
 float txtShapeXRot = 0;
 float txtRandomAmount = 20;
 PVector[] colors = {new PVector(255,50,50), new PVector(0,255,255)};
@@ -22,19 +23,59 @@ void loadScene3dTxt(){
     for(int i=0;i <8;i++){
       lightPositions[i] = new PVector();
     }
+    
+    kickADSR = new Envelope(0.01, .01, 1.0, .125);
+    snareADSR = new Envelope(0.01, .01, 1, 0.0625);
+    env3ADSR = new Envelope(0.01, .01, 0.75, .2);
+    lfo1.SetAmp(.2);
+    lfo1.SetFreq(.12);
+    //lfo1.SetFreq(.006);
+    //lfo1.SetFreq(0.003);
+    lfo2.SetAmp(0.25);
+    lfo2.SetFreq(0.045);
 }
 
 void renderScene3dTxt(){
 
-    float bright = (frameCount % 480)/960.f + 0.5;
-    float ySpeed = (frameCount % 1500)/1500.f;
-    float xSpeed = (frameCount % 1300)/1300.f;
-    SimplePBR.setExposure(bright*.5f);
     background(0);
     //translate(width/2, height/2,0);
     resetShader();
     fill(255);
     noLights();
+
+    kick = kickADSR.Process(kickGate);
+    snare = (snareADSR.Process(snareGate));
+    env3 = (env3ADSR.Process(env3Gate) + 1.f );
+    lfo1Val = lfo1.Process();
+    lfo2Val = lfo2.Process();
+
+    float bright = lfo1Val + 0.5 + 2*snare;
+  
+    SimplePBR.drawCubemap(this.g, 800);
+    //rotates 
+    //rotateY(txt3dz);
+    //txt3dz = txt3dz + 0.2;
+    //float txt3dmX = map(mouseX, 0, width, 100, width*2); 
+    //txt3dz += 0.2;
+    txt3dz += 8*kick;
+    camera(0, 0, txt3dz, 0, 0, 0, 0, 1, 0);
+    starMat.setMetallic(14.5);    
+    starMat.bind();
+
+     for(int i=0; i<stars.length; i++) {
+      stars[i].fly(0); 
+     }
+  
+
+    //float bright = lfo1Val;
+
+    float ySpeed = (frameCount % 1500)/1500.f;
+    float xSpeed = (frameCount % 1300)/1300.f;
+    
+    mat.setMetallic(1.5);
+    mat.bind();
+    SimplePBR.setExposure(bright*.5f);
+
     //lightFalloff(0f, 0.0001f, 0.00001f);
     //lightFalloff(0f, 0.001f, 0.0001f);
     
@@ -79,33 +120,11 @@ void renderScene3dTxt(){
     tes.rotateX(txtShapeXRot);
     
     
-    draw3dTxtBackground();
-    mat.bind();
+    
+    //mat.bind();
     shape(tes);
 }
 
-void draw3dTxtBackground(){
-    //scaledPG.beginDraw();
-    //  scaledPG.fill(255);
-    //  scaledPG.stroke(255);
-    //  scaledPG.background(0);
-    //  scaledPG.image(dvdImage, dvdX, dvdY, dvdWidth, dvdHeight);
-    //  scaledPG.tint(dvdR,dvdG,dvdB);
-      
-    //scaledPG.background(20); // DARK GREY
-
- 
-     // CAMERA //
-    //float txt3dmX = map(mouseX, 0, width, 100, width*2);
-    txt3dz += 0.1;
-    camera(0, 0, txt3dz, 0, 0, 0, 0, 1, 0);
-    //rotates 
-    //rotateY(txt3dz);
-    txt3dz = txt3dz + 0.2;
-     for(int i=0; i<stars.length; i++) {
-      stars[i].fly(0); 
-     }
-}
 
 
 class Star {

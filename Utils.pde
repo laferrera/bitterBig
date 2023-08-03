@@ -92,16 +92,18 @@ void noteOn(int channel, int pitch, int velocity) {
       sceneId = 0;
     }
     if(pitch == 71){
-      sceneId = 1;
       loadScene1();
+      sceneId = 1;
     }
     if(pitch==74){
+      loadSceneWaves();      
       sceneId = 4;
-      loadSceneWaves();
+
     }
     if(pitch==75){
+      loadScene3dTxt();      
       sceneId = 5;
-      loadSceneWaves();
+
     }
     
     

@@ -168,6 +168,7 @@ void setup() {
     
   SimplePBR.init(this, "data/textures/cubemap/Zion_Sunsetpeek"); // init PBR setting processed cubemap
   mat = new PBRMat("data/textures/material/Metal10/");
+  starMat = new PBRMat("data/textures/material/Metal10/");
   bitterGreensText = loadShape("data/bittergreens2.obj");
   //bitterGreensText.rotateX(PI);
   charliText = loadShape("data/bittergreens2.obj");
