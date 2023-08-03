@@ -14,6 +14,13 @@ float dvdHeight;
 void setupSceneIdle(){
   dvdWidth = dvdImage.width/16;
   dvdHeight = dvdImage.height/16;
+  greyScale = false;
+  starStreakOn = false;
+  channelsOn = false;
+  gaussianOn = false;
+  blurOn = false;
+  glitchOn = false;
+  grainOn = false;
 }
 
 void dvdPickColor(){
@@ -49,14 +56,6 @@ void dvdMoveLogo(){
 
 void renderSceneIdle(){
   camera(width/2.0, height/2.0, (height/2.0) / tan(PI*30.0 / 180.0), width/2.0, height/2.0, 0, 0, 1, 0);
-  greyScale = false;
-  starStreakOn = false;
-  channelsOn = false;
-  gaussianOn = false;
-  blurOn = false;
-  glitchOn = false;
-  grainOn = false;
-  
   dvdMoveLogo();
   
 
