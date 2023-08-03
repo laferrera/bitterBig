@@ -32,6 +32,7 @@ void loadSceneWaves(){
 
 
 void renderSceneWaves(){
+  camera(width/2.0, height/2.0, (height/2.0) / tan(PI*30.0 / 180.0), width/2.0, height/2.0, 0, 0, 1, 0);
   kick = (kickADSR.Process(kickGate) + 0.f ) * map(kickVel,0,128,0,2);
   lastSnareVel = lerp(lastSnareVel, snareVel, 0.25);
   snare = (snareADSR.Process(snareGate) + 0.f );;

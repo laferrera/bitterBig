@@ -5,7 +5,7 @@ PVector[] colors = {new PVector(255,50,50), new PVector(0,255,255)};
 PVector[] lightPositions = new PVector[8]; // Processing support 8 lights
 
 Star[] stars = new Star[2000];
-float z = 0;
+float txt3dz = 0;
 
 void loadScene3dTxt(){
     for(int i=0; i<stars.length; i++) {
@@ -31,7 +31,7 @@ void renderScene3dTxt(){
     float xSpeed = (frameCount % 1300)/1300.f;
     SimplePBR.setExposure(bright*.5f);
     background(0);
-    translate(width/2, height/2,0);
+    //translate(width/2, height/2,0);
     resetShader();
     fill(255);
     noLights();
@@ -85,47 +85,26 @@ void renderScene3dTxt(){
 }
 
 void draw3dTxtBackground(){
-    scaledPG.beginDraw();
-      scaledPG.fill(255);
-      scaledPG.stroke(255);
-      scaledPG.background(0);
-      scaledPG.image(dvdImage, dvdX, dvdY, dvdWidth, dvdHeight);
-      scaledPG.tint(dvdR,dvdG,dvdB);
+    //scaledPG.beginDraw();
+    //  scaledPG.fill(255);
+    //  scaledPG.stroke(255);
+    //  scaledPG.background(0);
+    //  scaledPG.image(dvdImage, dvdX, dvdY, dvdWidth, dvdHeight);
+    //  scaledPG.tint(dvdR,dvdG,dvdB);
       
-      scaledPG.background(20); // DARK GREY
+    //scaledPG.background(20); // DARK GREY
 
  
      // CAMERA //
-  float mX = map(mouseX, 0, width, 100, width*2);
-  camera(0, 0, mX, 0, 0, 0, 0, 1, 0);
- 
-   // SCENE CENTER TEST //
-   /*pushMatrix();
-   translate(0, 0, 0);
-   fill(#FFFFFF);
-   sphere(40);
-   sphereDetail(10);
-   popMatrix();*/
-  
-   
-   // ROTATE //
-   //float Y = map(mouseY, 0, height, -0.5, 0.5);
-   //float X = map(mouseX, 0, width, -0.5, 0.5);
-   //rotateX(Y);
-   rotateY(z);
-   scaledPG.rotateZ(z);
-   z = z + 0.001;
-   
-   // TRANSLATE //
-   //translate(mouseX, mouseY); // HORIZONTAL & VERTICAL
-   //translate(mouseX, 0); // HORIZONTAL ONLY
+    //float txt3dmX = map(mouseX, 0, width, 100, width*2);
+    float txt3dmX = (height/2.0) / tan(PI*30.0 / 180.0);
+    camera(0, 0, txt3dmX, 0, 0, 0, 0, 1, 0);
+    //rotates 
+    //rotateY(txt3dz);
+    txt3dz = txt3dz + 0.001;
      for(int i=0; i<stars.length; i++) {
       stars[i].fly(0); 
      }
-      
-      
-    scaledPG.endDraw();
-    image(scaledPG,0,0,width,height);
 }
 
 
@@ -154,7 +133,7 @@ class Star {
    noStroke();
    
      // BOX //
-   //box(10);
+   box(10);
    box(s);
    
      // SPHERE //
