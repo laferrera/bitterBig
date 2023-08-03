@@ -112,6 +112,7 @@ PShape bitterGreensText;
 PShape charliText;
 
 int sceneId = 0;
+boolean delayedInits = false;
 
 void setup() {
   size(960, 540, P3D);
@@ -166,14 +167,6 @@ void setup() {
   scaledPG = createGraphics(960, 540,P3D);
   //scaledPG = createGraphics(480, 270,P3D);
     
-  SimplePBR.init(this, "data/textures/cubemap/Zion_Sunsetpeek"); // init PBR setting processed cubemap
-  mat = new PBRMat("data/textures/material/Metal10/");
-  starMat = new PBRMat("data/textures/material/Metal10/");
-  bitterGreensText = loadShape("data/bittergreens2.obj");
-  //bitterGreensText.rotateX(PI);
-  charliText = loadShape("data/bittergreens2.obj");
-  charliText.rotateX(PI);
-  bitterGreensText.scale(0.9);
   setupSceneIdle();  
     
   // Create an Audio input and grab the 1st channel
@@ -198,8 +191,18 @@ void mousePressed(){
   
 
 void draw() {
-
-   resetShader();
+  if(!delayedInits){
+    SimplePBR.init(this, "data/textures/cubemap/Zion_Sunsetpeek"); // init PBR setting processed cubemap
+    mat = new PBRMat("data/textures/material/Metal10/");
+    starMat = new PBRMat("data/textures/material/Metal10/");
+    bitterGreensText = loadShape("data/bittergreens2.obj");
+    //bitterGreensText.rotateX(PI);
+    charliText = loadShape("data/bittergreens2.obj");
+    charliText.rotateX(PI);
+    bitterGreensText.scale(0.9);
+  }
+    
+  resetShader();
   render();
   scaledPG.loadPixels();
   shaders();
