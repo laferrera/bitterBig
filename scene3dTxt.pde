@@ -5,7 +5,7 @@ PVector[] colors = {new PVector(255,50,50), new PVector(0,255,255)};
 PVector[] lightPositions = new PVector[8]; // Processing support 8 lights
 
 Star[] stars = new Star[2000];
-float txt3dz = 0;
+float txt3dz = (height/2.0) / tan(PI*30.0 / 180.0);
 
 void loadScene3dTxt(){
     for(int i=0; i<stars.length; i++) {
@@ -17,7 +17,7 @@ void loadScene3dTxt(){
     mat.setMetallic(1.5);
        
     noStroke();
-    
+    txt3dz = (height/2.0) / tan(PI*30.0 / 180.0);
     
     for(int i=0;i <8;i++){
       lightPositions[i] = new PVector();
@@ -97,11 +97,11 @@ void draw3dTxtBackground(){
  
      // CAMERA //
     //float txt3dmX = map(mouseX, 0, width, 100, width*2);
-    float txt3dmX = (height/2.0) / tan(PI*30.0 / 180.0);
-    camera(0, 0, txt3dmX, 0, 0, 0, 0, 1, 0);
+    txt3dz += 0.1;
+    camera(0, 0, txt3dz, 0, 0, 0, 0, 1, 0);
     //rotates 
     //rotateY(txt3dz);
-    txt3dz = txt3dz + 0.001;
+    txt3dz = txt3dz + 0.2;
      for(int i=0; i<stars.length; i++) {
       stars[i].fly(0); 
      }
@@ -133,14 +133,10 @@ class Star {
    noStroke();
    
      // BOX //
-   box(10);
+   box(5);
    box(s);
-   
-     // SPHERE //
-   //sphereDetail(10);
-   //sphere(4);
-   
-   
+
+     
    popMatrix();
  }
 }
