@@ -216,3 +216,11 @@ void draw() {
     finishedDelayedInits = true;
   }
 }
+
+void dispose(){
+  println("stopping...");
+  myBus.dispose();
+  g.dispose();
+  scaledPG.dispose();
+  println("bye");
+}
