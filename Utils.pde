@@ -13,7 +13,7 @@ void videoExport(){
     videoExport.endMovie();
   } else{
     videoExport = new VideoExport(this, "data/exports/video_export_"+timestamp()+".mp4");
-    videoExport.setFrameRate(60);  
+    videoExport.setFrameRate(_frameRate);  
     videoExport.startMovie();
     exportingVideo = true;
   }
@@ -81,6 +81,8 @@ void noteOn(int channel, int pitch, int velocity) {
      snareVel = velocity;
   } else if(channel == 0 && pitch == 38){
      env3Gate = true;
+  } else if(channel == 0 && pitch == 39){
+     env4Gate = true;
   //} else if(channel == 0 && (pitch == 58 || pitch == 61)){ // 61 is another cymbal...
   //   cymGate = true;
   //} else if(channel == 0 && pitch >= 65 && pitch <= 72){ // tom range
@@ -131,6 +133,8 @@ void noteOff(int channel, int pitch, int velocity) {
      snareGate = false;
   } else if(channel == 0 && pitch == 38){
      env3Gate = false;
+  } else if(channel == 0 && pitch == 39){
+     env4Gate = false;
   //} else if(channel == 0 && (pitch == 58 || pitch == 61)){ // 61 is another cymbal...
   //   cymGate = false;
   //} else if(channel == 0 && pitch >= 65 && pitch <= 72){ // 67 is a tom

@@ -52,6 +52,9 @@ float snareVel=0;
 boolean env3Gate = false;
 Envelope env3ADSR;
 float env3;
+boolean env4Gate = false;
+Envelope env4ADSR;
+float env4;
 
 
 boolean cymGate = false;
