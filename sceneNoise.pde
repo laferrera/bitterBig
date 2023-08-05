@@ -1,3 +1,6 @@
+float noiseScale = 0.001;
+float noiseSpeed = 0.001;
+float strokeThick = 0.25;
 color colour = color(255, 255, 255);
 color darkColour = color(64,64,64);
 color darkerColour = color(128,128,128);
@@ -9,7 +12,7 @@ float sWeight;
 float noiseScale_;
 float noiseSpeed_;
 
-void loadScene1(){
+void loadSceneNoise(){
   dvdWidth = dvdImage.width/16;
   dvdHeight = dvdImage.height/16;
   greyScale = false;
@@ -22,12 +25,19 @@ void loadScene1(){
   kickADSR = new Envelope(0.01, .01, 0.75, .2);
   snareADSR = new Envelope(0.01, .25, 0.75, .25);
   env3ADSR = new Envelope(0.01, .01, 0.75, .2);
+  env4ADSR = new Envelope(0.01, .01, 0.75, .2);
+  lfo1.SetFreq(.1);
+  lfo1.SetAmp(0.5);
+  lfo2.SetFreq(.05);
+  lfo2.SetAmp(0.5);
+  lfo3.SetFreq(.025);
+  lfo3.SetAmp(0.5);
 }
 
-void renderScene1(){  
+void renderSceneNoise(){  
   //glitchAmp = (lfo3Val+1 )/2 + (kick/4) + (snare/2);
   //glitchAmp = (lfo3Val+1 )/2 * ((kick/4) + (snare/2));
-  glitchAmp = (lfo3Val+1 )/2 * (env3/2);
+  glitchAmp = (lfo3Val+1 )/2 * (env4/2);
   amplitudeLFO = sin(.035 * float(frameCount)) * noise(frameCount);
   amplitudeLFO = map(amplitudeLFO, 0, 1, .75, 1.25);
   
@@ -35,6 +45,7 @@ void renderScene1(){
   kick = (kickADSR.Process(kickGate) + 1.f );
   snare = (snareADSR.Process(snareGate) + 1.f );
   env3 = (env3ADSR.Process(env3Gate) + 1.f );
+  env4 = (env4ADSR.Process(env4Gate) + 1.f );
   
   cym = (cymADSR.Process(cymGate) + 1.f );
   //tom = (tomADSR.Process(tomGate) + 1.f );
@@ -43,7 +54,7 @@ void renderScene1(){
   lfo2Val = lfo2.Process();
   lfo3Val = lfo3.Process();
   
-  //background(0);
+  
   float cymColorFloat = map(cym, 1, 2, 255, 200);
   color cymColor = color(cymColorFloat,cymColorFloat,cymColorFloat); 
   //background(bgColorFloat,bgColorFloat,bgColorFloat);
@@ -51,9 +62,10 @@ void renderScene1(){
   color snareColor = color(snareColorFloat,snareColorFloat,snareColorFloat);
   scaledPG.background(snareColor);
   
+  starStreakOn = env3Gate;
   
-  sWeight = (strokeThick + lfo2Val/4) * snare;
-  sWeight = max(sWeight,strokeThick);
+  sWeight = (strokeThick + abs(lfo2Val)/8) * 4*snare;
+  //sWeight = max(sWeight,strokeThick);
   scaledPG.strokeWeight(sWeight);
 
   scaledPG.stroke(cymColor);
@@ -64,7 +76,7 @@ void renderScene1(){
     noiseScale_ = noiseScale_ * .25;
     sWeight += strokeThick;
   }  
-  noiseSpeed_ = noiseSpeed + (lfo1Val+1) * noiseSpeed/2;    
+  noiseSpeed_ = noiseSpeed + (lfo1Val+2) * noiseSpeed/2;    
 
   scaledPG.strokeWeight(sWeight);
   
@@ -87,22 +99,8 @@ void renderScene1(){
     //createNoiseGrid(darkerColour, 100);
   scaledPG.pop();
   scaledPG.endDraw();
-  renderInfo();
 }
 
-void renderInfo(){
-  textBox.beginDraw();
-  textBox.background(255);
-  textBox.textSize(8.0);
-  textBox.fill(255);
-  textBox.rect(5, height-25, 100, height-10);
-  textBox.fill(0);
-  textBox.text("kick: " + kick, 5, 5);
-  textBox.text("snare: " + snare, 5, 15);
-  textBox.text("cym: " + cym, 5, 25);
-  textBox.endDraw();
-  image(textBox, 5, height-25);
-}
 
 void createNoiseGrid(color colour){
   

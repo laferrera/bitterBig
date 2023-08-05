@@ -4,7 +4,10 @@ void render(){
       renderSceneIdle();
       break;
     case 1: 
-      renderScene1();
+      renderSceneNoise();
+      break;
+    case 2:
+      renderSceneBox();
       break;
     case 3:
     renderSceneFungi();

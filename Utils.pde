@@ -91,11 +91,16 @@ void noteOn(int channel, int pitch, int velocity) {
   //   rideGate = true;
   } else if(channel == 0 && pitch >= 70 && pitch < 80){
     if(pitch == 70){
+      setupSceneIdle();
       sceneId = 0;
     }
     if(pitch == 71){
-      loadScene1();
+      loadSceneNoise();
       sceneId = 1;
+    }
+    if(pitch == 72){
+      loadSceneBox();
+      sceneId = 2;
     }
     if(pitch==73){
       loadSceneFungi();      

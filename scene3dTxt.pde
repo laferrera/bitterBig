@@ -47,6 +47,7 @@ void renderScene3dTxt(){
     kick = kickADSR.Process(kickGate);
     snare = (snareADSR.Process(snareGate));
     env3 = env3ADSR.Process(env3Gate);
+    env4 = env3ADSR.Process(env3Gate);
     txt3dToDisplay = env3 < 1 ? 0 : 1; 
     lfo1Val = lfo1.Process();
     lfo2Val = lfo2.Process();
@@ -60,6 +61,7 @@ void renderScene3dTxt(){
     resetShader();
     fill(255);
     noLights();
+    lightFalloff(0f, 0.0001f, 0.00001f);
 
     float bright = lfo1Val + 0.8 + 2*snare;
 
@@ -103,7 +105,7 @@ void renderScene3dTxt(){
     
     mat.setMetallic(1.5);
     mat.bind();
-    SimplePBR.setExposure(bright*.5f);
+    SimplePBR.setExposure(bright*.75f);
 
     //lightFalloff(0f, 0.0001f, 0.00001f);
     //lightFalloff(0f, 0.001f, 0.0001f);
@@ -172,7 +174,7 @@ class Star {
  float x;
  float y;
  float z;
- float s = random(2, 5);
+ float s = random(4, 8);
  
  Star(float starX, float starY, float starZ) {
  x = starX;

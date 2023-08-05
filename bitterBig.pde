@@ -105,10 +105,6 @@ Amplitude loudness;
 float volume = 0;
 float lastVolume = 0;
 
-float noiseScale = 0.001;
-float noiseSpeed = 0.001;
-float strokeThick = 0.35;
-
 PGraphics textBox;
 PGraphics scaledPG;
 
@@ -120,7 +116,7 @@ boolean finishedDelayedInits = false;
 
 void setup() {
   size(960, 540, P3D);
-  //size(1920, 1080, P2D);
+  //size(1920, 1080, P3D);
   frameRate(_frameRate);
   //frameRate(24);
   smooth(0);
