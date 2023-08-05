@@ -36,7 +36,8 @@ void loadScene3dTxt(){
     env3ADSR = new Envelope(0.0, .00, 1, 0);
     env4ADSR = new Envelope(0.01, .01, 1, 0.25);  
     lfo1.SetAmp(.2);
-    lfo1.SetFreq(.12);
+    //lfo1.SetFreq(.12);
+    lfo1.SetFreq(0.083333333);
     lfo2.SetAmp(0.2);
     lfo2.SetFreq(0.125);
     lfo3.SetAmp(0.2);

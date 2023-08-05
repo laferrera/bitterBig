@@ -21,6 +21,12 @@ void render(){
     case 6:
       renderSceneSine();
       break;
+    case 7:
+      renderSceneAnchovy();
+      break;
+    case 8:
+      renderSceneMap();
+      break;
   }
   
   

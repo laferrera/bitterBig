@@ -12,8 +12,8 @@ float lastKickVel;
 
 void loadSceneWaves(){
   greyScale = false;
-  starStreakOn = true;
-  channelsOn = true;
+  starStreakOn = false;
+  channelsOn = false;
   gaussianOn = false;
   blurOn = true;
   glitchOn = false;
@@ -22,11 +22,11 @@ void loadSceneWaves(){
   snareADSR = new Envelope(0.1, .1, .9, .2);
   env3ADSR = new Envelope(0.5, .01, 1, .5);
   env4ADSR = new Envelope(0.5, .01, 1, .5);
-  lfo1.SetAmp(1);
+  lfo1.SetAmp(0.5);
   lfo1.SetFreq(.06);
-  lfo2.SetAmp(0.25);
+  lfo2.SetAmp(0.12);
   lfo2.SetFreq(0.045);
-  lfo3.SetFreq(.025);
+  lfo3.SetFreq(.012);
   lfo3.SetAmp(0.5);
 }
 
@@ -80,6 +80,6 @@ void renderSceneWaves(){
   
   scaledPG.beginDraw();
     scaledPG.filter(waves);
-    //scaledPG.filter(dupontSaturation);
+    scaledPG.filter(dupontSaturation);
   scaledPG.endDraw();
 }

@@ -16,7 +16,8 @@ const vec4  kYIQToB   = vec4 (1.0, -1.107, 1.704, 0.0);
 varying vec4 vertTexCoord;
 uniform sampler2D texture;
 uniform float hue = .5;
-const float brightness=.2; // .1
+//const float brightness=.2; // .1
+const float brightness=1.0; // .1
 const float contrast=3.0; //3.0
 const float saturation=.5; //.1
 

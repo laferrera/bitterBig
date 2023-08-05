@@ -49,7 +49,8 @@ void renderSceneNoise(){
   
   cym = (cymADSR.Process(cymGate) + 1.f );
   //tom = (tomADSR.Process(tomGate) + 1.f );
-  ride = (rideADSR.Process(rideGate) + 1.f );
+  //ride = (rideADSR.Process(rideGate) + 1.f );
+  ride = env4;
   lfo1Val = lfo1.Process();
   lfo2Val = lfo2.Process();
   lfo3Val = lfo3.Process();
@@ -72,10 +73,10 @@ void renderSceneNoise(){
   //stroke(255);
   
   noiseScale_ = map(cym, 0, 1, noiseScale/2, noiseScale*2);
-  if(ride > 1){
-    noiseScale_ = noiseScale_ * .25;
-    sWeight += strokeThick;
-  }  
+  noiseScale_ = noiseScale_ * ride;
+  //if(ride > 1){
+  //  noiseScale_ = noiseScale_ * .25;
+  //}  
   noiseSpeed_ = noiseSpeed + (lfo1Val+2) * noiseSpeed/2;    
 
   scaledPG.strokeWeight(sWeight);

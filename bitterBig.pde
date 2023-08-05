@@ -41,6 +41,7 @@ PShader grain;
 PShader waves;
 PShader dupontSaturation;
 PShader physarum;
+PShader sdfCircle;
 
 boolean kickGate = false;
 Envelope kickADSR;
@@ -139,6 +140,10 @@ void setup() {
   waves = loadShader("waves.glsl");
   dupontSaturation = loadShader("dupontSaturation.glsl");
   physarum = loadShader("physarum.glsl");
+  sdfCircle = loadShader("sdfCircle.glsl");
+  sdfCircle.set("color1", 0.8,0.01,0.419);
+  sdfCircle.set("color2", 0.00,0.576,0.827);
+  sdfCircle.set("radius", 0.5);
   
   //oscP5 = new OscP5(this,10201);
   //myRemoteLocation = new NetAddress("127.0.0.1",2727);

@@ -47,9 +47,7 @@ void loadSceneFungi(){
 
 void renderSceneFungi(){
   
-  scaledPG.beginDraw();
-  //  scaledPG.background(0);
-  scaledPG.endDraw();
+
 
   kick = kickADSR.Process(kickGate);
   snare = (snareADSR.Process(snareGate));

@@ -118,6 +118,15 @@ void noteOn(int channel, int pitch, int velocity) {
       loadSceneSine();      
       sceneId = 6;
     }
+    if(pitch==77){
+      loadSceneAnchovy();      
+      sceneId = 7;
+    }
+    if(pitch==78){
+      loadSceneMap();      
+      sceneId = 8;
+    }
+    
     
     
   } else{ 
