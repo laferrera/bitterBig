@@ -47,7 +47,7 @@ void loadSceneFungi(){
 
 void renderSceneFungi(){
   
-    scaledPG.beginDraw();
+  scaledPG.beginDraw();
   //  scaledPG.background(0);
   scaledPG.endDraw();
 
