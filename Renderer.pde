@@ -16,8 +16,13 @@ void render(){
     renderSceneWaves();
       break;
     case 5:
-    renderScene3dTxt();
+      renderScene3dTxt();
+      break;
+    case 6:
+      renderSceneSine();
+      break;
   }
+  
   
 }
 

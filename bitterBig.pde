@@ -170,6 +170,25 @@ void setup() {
   //scaledPG = createGraphics(480, 270,P3D);
     
   setupSceneIdle();  
+  
+  
+    font = loadFont("C64ProMono-10.vlw");  
+  letters = new char[256];
+  for (int i = 0; i < 256; i++) {
+    int index = int(map(i, 0, 256, 0, letterOrder.length()));
+    letters[i] = letterOrder.charAt(index);
+  }
+  println("letters: ", letters[0]);
+  int count = int(width * height);  
+  chars = new char[count];
+  // current brightness for each point
+  bright = new float[count];
+  for (int i = 0; i < count; i++) {
+    // set each brightness to black
+    bright[i] = 0;
+  }
+  
+  
     
   // Create an Audio input and grab the 1st channel
   //input = new AudioIn(this, 0);

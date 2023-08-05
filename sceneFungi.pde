@@ -39,13 +39,17 @@ void loadSceneFungi(){
   lfo2.SetFreq(0.08020625045);
   lfo3.SetAmp(1);
   lfo3.SetFreq(0.1604125);
-  scaledPG.beginDraw();
-    scaledPG.background(0);
-  scaledPG.endDraw();
+  //scaledPG.beginDraw();
+  //  scaledPG.background(0);
+  //scaledPG.endDraw();
     
 }
 
 void renderSceneFungi(){
+  
+    scaledPG.beginDraw();
+  //  scaledPG.background(0);
+  scaledPG.endDraw();
 
   kick = kickADSR.Process(kickGate);
   snare = (snareADSR.Process(snareGate));

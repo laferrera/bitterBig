@@ -11,6 +11,7 @@ void myKeyPressed(KeyEvent ke){
     case '3': { sceneId = 3;loadSceneFungi();} break;
     case '4': { sceneId = 4;loadSceneWaves();} break;
     case '5': { sceneId = 5;loadScene3dTxt();} break;
+    case '6': { sceneId = 6;loadSceneSine();} break;    
     //case 't': {trigger = !trigger; break;}
   }
    

@@ -114,6 +114,10 @@ void noteOn(int channel, int pitch, int velocity) {
       loadScene3dTxt();      
       sceneId = 5;
     }
+    if(pitch==76){
+      loadSceneSine();      
+      sceneId = 6;
+    }
     
     
   } else{ 
