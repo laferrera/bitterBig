@@ -79,8 +79,8 @@ void renderSceneSine(){
   
   float t = frameCount / tSlider;
   //for (int x = 0; x < width; x += xSlider) {
-  for (int y = 0; y < height; y += fontSize*(ySlider * ySliderLFO)) {    
-    float x = (width / 2) 
+  for (int y = 0; y < scaledPG.height; y += fontSize*(ySlider * ySliderLFO)) {    
+    float x = (scaledPG.width / 2) 
               + fontSize * xSlider * (snare + 1)   
               * int( amplitudeLFO * amplitudeSlider/fontSize 
               * sin(y / 30 + (t * tLFO)));

@@ -74,7 +74,7 @@ void renderSceneBox(){
     scaledPG.pushMatrix();
     scaledPG.strokeWeight(boxStrokeWeight);
     
-    scaledPG.translate(width/2, height/2);
+    scaledPG.translate(scaledPG.width/2, scaledPG.height/2);
     
     tesseract.display();
     scaledPG.popMatrix();

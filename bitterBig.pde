@@ -116,14 +116,14 @@ int sceneId = 0;
 boolean finishedDelayedInits = false;
 
 void setup() {
-  size(960, 540, P3D);
-  //size(1920, 1080, P3D);
+  //size(960, 540, P3D);
+  size(1920, 1080, P3D);
   frameRate(_frameRate);
   //frameRate(24);
   smooth(0);
   
   dvdImage = loadImage("dvd.png");
-  cf = new ControlFrame(this, 300, 500, "Controls");
+  //cf = new ControlFrame(this, 300, 500, "Controls");
   
   //starglowstreak = loadShader("myStarglowstreaks.glsl");
   //starglowstreak = loadShader("myRadialStreak.glsl");

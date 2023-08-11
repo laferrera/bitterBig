@@ -5,7 +5,7 @@ PImage frame;
 boolean inverseLetters = false; 
 
 void loadSceneAnchovy(){
-  renderSceneSine();
+  //renderSceneSine();
   fontSize = 25.0;
   brightDamp = 0.05;
   pixelOffset = 1.0;
